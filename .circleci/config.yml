@@ -16,10 +16,10 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Python dependencies
-        command: |
-          echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
-          pip install --user -r requirements.txt
+          name: Python dependencies
+          command: |
+            echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
+            pip install --user -r requirements.txt
       
       - run:
           name: Run automated tests
