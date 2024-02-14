@@ -5,30 +5,32 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-orbs:
-  python: circleci/python@2.0.3
-
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   build_FileDrive:
 
     docker:
-      - image: cimg/python
+      - image: circleci/python:3.7.4
 
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
+      - run:
+        name: Python dependencies
+        command: |
+          echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
+            pip install --user -r requirements.txt
       
       - run:
           name: Run automated tests
-          command: python -m pytest
+          command: |
+            pytest
         
-      - persist_to_workspace:
-          root: ~/project
-          paths: 
-            - .
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
