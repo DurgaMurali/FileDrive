@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Run automated tests
           command: |
-            pytest TestApp.py
+            python runAPITests.py
         
       - store_test_results:
           path: test-reports
