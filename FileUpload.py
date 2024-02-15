@@ -1,6 +1,7 @@
 from bottle import route, run, request, template, redirect, TEMPLATE_PATH
 import sqlite3
 import os
+import sys
 
 
 # Login page
@@ -137,6 +138,10 @@ def register_reply():
 @route('/logout/<username>', method='POST')
 def logout(username):
     redirect('/login?register=false&retry=false&register_success=false&logout=true')
+
+@route('/shutdown')
+def shutdown():
+    sys.stderr.close()
 
 
 if __name__ == '__main__':

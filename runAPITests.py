@@ -20,6 +20,4 @@ if __name__ == "__main__":
     testThread.start()
 
     testThread.join()
-    #serverThread.join()
-    pid = os.getpid()
-    os.kill(pid, signal.SIGKILL)
+    serverThread.join()

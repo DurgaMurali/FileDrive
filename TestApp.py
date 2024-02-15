@@ -1,5 +1,5 @@
 import pytest
-from bottle import Bottle, template
+from bottle import Bottle, template, TEMPLATE_PATH
 import requests
 from requests import get, post
 from FileUpload import login
@@ -7,6 +7,8 @@ import os
 import sqlite3
 
 base_url = 'http://localhost:8082'
+TEMPLATE_PATH.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "Views")))
+print(os.path.abspath(os.path.join(os.path.dirname(__file__), "Views")))
 
 def test_login():
     url = base_url+'/login'
@@ -147,3 +149,6 @@ def test_logout():
     cursor.execute("DELETE FROM UserAuthentication where username=?", (user,))
     connection.commit()
     connection.close()
+
+    # shutdown the server to stop the test thread
+    response = requests.get(base_url+'/shutdown')
