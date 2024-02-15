@@ -80,13 +80,6 @@ def test_login_reply():
     assert response.text == template('DropFiles.tpl', welcome=True, user='Will')
 
 
-def test_logout():
-    url = base_url+'/logout/Will'
-    response = requests.post(url)
-    assert response.status_code == 200
-    assert response.text == template('Login.tpl', register=False, retry=False, register_success=False, logout=True)
-
-
 def test_upload_page():
     url = base_url+'/upload/Will'
     response = requests.get(url)
@@ -140,6 +133,13 @@ def test_delete():
     assert response.status_code == 200
     assert response.text == template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, folder_success=False, folder_fail=False, delete_success=False, delete_fail=True, user='Will', error_message=error)
 
+
+def test_logout():
+    url = base_url+'/logout/Will'
+    response = requests.post(url)
+    assert response.status_code == 200
+    assert response.text == template('Login.tpl', register=False, retry=False, register_success=False, logout=True)
+    
     # Delete the user
     user="testuser1"
     connection = sqlite3.connect("Users.db")
