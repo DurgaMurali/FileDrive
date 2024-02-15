@@ -77,29 +77,13 @@ def delete(username):
     except FileNotFoundError as e:
         print(e)
         error = "File not found!"
-        return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, folder_success=False, folder_fail=False, delete_success=False, delete_fail=True, user=username, error_message=error)
+        return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, delete_success=False, delete_fail=True, user=username, error_message=error)
     except OSError as e:
         print(e)
         error = "Cannot delete folders! Please enter a filename!"
-        return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, folder_success=False, folder_fail=False, delete_success=False, delete_fail=True, user=username, error_message=error)
+        return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, delete_success=False, delete_fail=True, user=username, error_message=error)
     
-    return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, folder_success=False, folder_fail=False, delete_success=True, user=username, folder_name=folder_path)
-
-
-# Create Folder
-@route('/newfolder/<username>', method='POST')
-def createFolder(username):
-    folder = request.forms.get('folder')
-
-    # if folder is empty -- handle this case
-    cwd = os.getcwd()
-    folder_path = cwd+"/Files/"+folder
-
-    try:
-        os.makedirs(folder_path)
-        return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, folder_success=True, user=username, folder_name=folder_path)
-    except OSError as e:
-        return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, folder_success=False, folder_fail=True, user=username, error_message=e)
+    return template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, delete_success=True, user=username, folder_name=folder_path)
 
 
 # Register Page
