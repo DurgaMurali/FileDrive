@@ -8,7 +8,6 @@ import sqlite3
 
 base_url = 'http://localhost:8082'
 TEMPLATE_PATH.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "Views")))
-print(os.path.abspath(os.path.join(os.path.dirname(__file__), "Views")))
 
 def test_login():
     url = base_url+'/login'
