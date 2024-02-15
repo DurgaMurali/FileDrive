@@ -54,7 +54,7 @@ def test_register_reply():
     # Successful registration
     response = requests.post(url, data={'username': 'testuser1', 'firstname': 'Will', 'lastname': 'Smith', 'password_1': 'WillSmith23', 'password_2': 'WillSmith23'})
     assert response.status_code == 200
-    assert response.text == template('login.tpl', register=False, retry=False, register_success=True, logout=False)
+    assert response.text == template('Login.tpl', register=False, retry=False, register_success=True, logout=False)
 
     # username already exists
     response = requests.post(url, data={'username': 'testuser1', 'firstname': 'Will', 'lastname': 'Smith', 'password_1': 'WillSmith23', 'password_2': 'WillSmith23'})
