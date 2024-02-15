@@ -69,12 +69,6 @@ Body {
 % elif file_fail:
   <center> <h1 class="textfont"> {{user}}'s Dashboard </h1> </center>
   <center> <h3 class="subtextfont"> {{error_message}}! </h3> </center>
-% elif folder_success:
-  <center> <h1 class="textfont"> {{user}}'s Dashboard </h1> </center>
-  <center> <h3 class="subtextfont"> Folder successfully created at {{folder_name}} </h3> </center>
-% elif folder_fail:
-  <center> <h1 class="textfont"> {{user}}'s Dashboard </h1> </center>
-  <center> <h3 class="subtextfont"> {{error_message}}! </h3> </center>
 % elif delete_success:
   <center> <h1 class="textfont"> {{user}}'s Dashboard </h1> </center>
   <center> <h3 class="subtextfont"> File deleted from {{folder_name}} </h3> </center>
@@ -88,14 +82,6 @@ Body {
   <div class="container"> 
     <text class="inputtextfont"> Select a file: </text> <input type="file" name="upload" required/> 
     <input type="submit" value="Start upload" />
-  </div>
-</form>
-<br>
-
-<form action = "/newfolder/{{user}}" method="POST">
-  <div class="container"> 
-    <text class="inputtextfont"> Folder Name: </text> <input type="text" name="folder" required/>
-    <input type="submit" value="Create New Folder" />
   </div>
 </form>
 <br>

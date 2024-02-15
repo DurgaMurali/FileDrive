@@ -14,17 +14,21 @@ jobs:
       - image: circleci/python:3.7.4
 
     steps:
+      - add_ssh_keys:
+          fingerprints:
+          - "SHA256:UPMMgFwPxY1QMBVUxMPAYxHQgj2tjbWurwiGIaBYF+I durgamuralidharan@Durgas-MacBook-Air.local"
+
       - checkout
       - run:
-        name: Python dependencies
-        command: |
-          echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
+          name: Python dependencies
+          command: |
+            echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
             pip install --user -r requirements.txt
       
       - run:
           name: Run automated tests
           command: |
-            pytest
+            python runAPITests.py
         
       - store_test_results:
           path: test-reports

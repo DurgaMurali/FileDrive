@@ -1,5 +1,5 @@
 import pytest
-from bottle import Bottle, template
+from bottle import Bottle, template, TEMPLATE_PATH
 import requests
 from requests import get, post
 from FileUpload import login
@@ -7,6 +7,7 @@ import os
 import sqlite3
 
 base_url = 'http://localhost:8082'
+TEMPLATE_PATH.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "Views")))
 
 def test_login():
     url = base_url+'/login'
@@ -53,7 +54,7 @@ def test_register_reply():
     # Successful registration
     response = requests.post(url, data={'username': 'testuser1', 'firstname': 'Will', 'lastname': 'Smith', 'password_1': 'WillSmith23', 'password_2': 'WillSmith23'})
     assert response.status_code == 200
-    assert response.text == template('login.tpl', register=False, retry=False, register_success=True, logout=False)
+    assert response.text == template('Login.tpl', register=False, retry=False, register_success=True, logout=False)
 
     # username already exists
     response = requests.post(url, data={'username': 'testuser1', 'firstname': 'Will', 'lastname': 'Smith', 'password_1': 'WillSmith23', 'password_2': 'WillSmith23'})
@@ -78,13 +79,6 @@ def test_login_reply():
     response = requests.post(url, data={'username': 'testuser1', 'password': 'WillSmith23'})
     assert response.status_code == 200
     assert response.text == template('DropFiles.tpl', welcome=True, user='Will')
-
-
-def test_logout():
-    url = base_url+'/logout/Will'
-    response = requests.post(url)
-    assert response.status_code == 200
-    assert response.text == template('Login.tpl', register=False, retry=False, register_success=False, logout=True)
 
 
 def test_upload_page():
@@ -140,6 +134,13 @@ def test_delete():
     assert response.status_code == 200
     assert response.text == template('DropFiles.tpl', welcome=False, file_success=False, file_fail=False, folder_success=False, folder_fail=False, delete_success=False, delete_fail=True, user='Will', error_message=error)
 
+
+def test_logout():
+    url = base_url+'/logout/Will'
+    response = requests.post(url)
+    assert response.status_code == 200
+    assert response.text == template('Login.tpl', register=False, retry=False, register_success=False, logout=True)
+    
     # Delete the user
     user="testuser1"
     connection = sqlite3.connect("Users.db")
@@ -147,3 +148,6 @@ def test_delete():
     cursor.execute("DELETE FROM UserAuthentication where username=?", (user,))
     connection.commit()
     connection.close()
+
+    # shutdown the server to stop the test thread
+    response = requests.get(base_url+'/shutdown')
