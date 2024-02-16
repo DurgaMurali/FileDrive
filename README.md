@@ -4,11 +4,11 @@ FileDrive implements a skeletal file server to store files in Python using the b
 
 ## APIs
 
-#### /login - user login
-#### /register - user registration
-#### /upload - file upload
-#### /delete - file delete
-#### /logout - user logout
+##### /login    - user login
+##### /register - user registration
+##### /upload   - file upload
+##### /delete   - file delete
+##### /logout   - user logout
 
 ## Installation
 
@@ -29,3 +29,6 @@ python FileUpload.py
 ```
 python runAPITests.py
 ```
+
+## Acknowledgements
+##### The Login and Register template files are improved upon the HTML code from [javatpoint](https://www.javatpoint.com/html-login-form)
